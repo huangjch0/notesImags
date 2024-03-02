@@ -23,6 +23,10 @@ class LogProcessorApp(QWidget):
         self.sort_input = QCheckBox() 
         self.delimiter_label = QLabel('Delimiter:')
         self.delimiter_input = QLineEdit('-----------------end------------------')
+        self.table_nameP_label = QLabel('table_nameP:')
+        self.table_nameP_input = QLineEdit('HwTblID')
+        self.notion_label = QLabel('notion:')
+        self.notion_input = QLineEdit(':')
         
         # 创建按钮
         self.browse_button = QPushButton('选择文件')
@@ -44,6 +48,10 @@ class LogProcessorApp(QWidget):
         layout.addWidget(self.sort_input)
         layout.addWidget(self.delimiter_label)
         layout.addWidget(self.delimiter_input)
+        layout.addWidget(self.table_nameP_label)
+        layout.addWidget(self.table_nameP_input)
+        layout.addWidget(self.notion_label)
+        layout.addWidget(self.notion_input)
         layout.addWidget(self.start_button)
         layout.addWidget(self.output_text)
 
@@ -67,8 +75,8 @@ class LogProcessorApp(QWidget):
         initKeyword = self.keyword_input.text()
         sort = str(self.sort_input.isChecked())
         delimiter = self.delimiter_input.text()
-        table_nameP = "HwTblID"  # 如果有GUI字段，则替换为相应的self.table_nameP_input.text()
-        notion = ":"  # 如果有GUI字段，则替换为相应的self.notion_input.text()
+        table_nameP =  self.table_nameP_input.text()
+        notion = self.notion_input.text()
 
         # 构建配置对象
         config = argparse.Namespace(
