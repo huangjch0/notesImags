@@ -149,7 +149,7 @@ class LogProcessorApp(QWidget):
         # 将结果显示在GUI的文本区域
         from data_processor import print_by_format, save_to_txt
         # 获取DataCut实例的处理结果
-        output_str = print_by_format(data_processor, self.delimiter_input.text())
+        output_str = print_by_format(data_processor)
     
         # 显示结果在GUI的文本区域
         self.output_text.setText(output_str)
