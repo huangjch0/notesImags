@@ -1,5 +1,7 @@
 import sys
 from PyQt5.QtWidgets import QApplication, QWidget, QVBoxLayout, QLabel, QLineEdit, QPushButton, QTextEdit, QFileDialog, QCheckBox
+from PyQt5.QtWidgets import QHBoxLayout
+from PyQt5.QtCore import Qt
 from data_processor import DataCut, parse_opt
 import argparse
 import os
@@ -11,25 +13,25 @@ class LogProcessorApp(QWidget):
 
     def initUI(self):
         self.setWindowTitle('UFP日志裁剪工具')
-        self.setGeometry(100, 100, 400, 300) #参数分别为窗口的x轴位置，y轴位置，宽，高，
+        self.setGeometry(100, 100, 600, 800) #参数分别为窗口的x轴位置，y轴位置，宽，高，
 
         layout = QVBoxLayout()
         # 创建输入框和标签
-        self.files_label = QLabel('Files:')
+        self.files_label = QLabel('文件:')
         self.files_input = QLineEdit('./datalab/')
-        self.keyword_label = QLabel('Initial Keywords:')
+        self.keyword_label = QLabel('初始化关键词:')
         self.keyword_input = QLineEdit('vpnnh, key:7')
-        self.sort_label = QLabel('Sort by Time:')
+        self.sort_label = QLabel('按时间排序:')
         self.sort_input = QCheckBox() 
-        self.delimiter_label = QLabel('Delimiter:')
+        self.delimiter_label = QLabel('日志分割符:')
         self.delimiter_input = QLineEdit('-----------------end------------------')
-        self.table_nameP_label = QLabel('table_nameP:')
+        self.table_nameP_label = QLabel('表头名:')
         self.table_nameP_input = QLineEdit('HwTblID')
-        self.notion_label = QLabel('notion:')
+        self.notion_label = QLabel('标识符:')
         self.notion_input = QLineEdit(':')
         
         # 创建按钮
-        self.browse_button = QPushButton('选择文件')
+        self.browse_button = QPushButton('选择您的文件夹')
         self.browse_button.clicked.connect(self.browse_files)
         self.start_button = QPushButton('日志裁剪')
         self.start_button.clicked.connect(self.start_processing)
@@ -37,6 +39,15 @@ class LogProcessorApp(QWidget):
         # 创建输出区域
         self.output_text = QTextEdit()
         self.output_text.setReadOnly(True)
+        
+        self.prompt = QLabel('日志结果输出于 "output.log" ')
+
+        # 创建一个水平布局
+        hbox = QHBoxLayout()
+
+        # 将sort_label和sort_input添加到这个布局中
+        hbox.addWidget(self.sort_label)
+        hbox.addWidget(self.sort_input)
 
         # 添加组件到布局
         layout.addWidget(self.files_label)
@@ -44,8 +55,10 @@ class LogProcessorApp(QWidget):
         layout.addWidget(self.browse_button)
         layout.addWidget(self.keyword_label)
         layout.addWidget(self.keyword_input)
-        layout.addWidget(self.sort_label)
-        layout.addWidget(self.sort_input)
+
+        # 将这个水平布局添加到你的主布局中
+        layout.addLayout(hbox)
+
         layout.addWidget(self.delimiter_label)
         layout.addWidget(self.delimiter_input)
         layout.addWidget(self.table_nameP_label)
@@ -53,8 +66,9 @@ class LogProcessorApp(QWidget):
         layout.addWidget(self.notion_label)
         layout.addWidget(self.notion_input)
         layout.addWidget(self.start_button)
+        layout.addWidget(self.prompt)
+        self.prompt.setAlignment(Qt.AlignCenter)
         layout.addWidget(self.output_text)
-
         self.setLayout(layout)
 
     # def browse_files(self):
