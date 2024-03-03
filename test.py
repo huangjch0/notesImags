@@ -2,7 +2,7 @@ import sys
 import os
 from PyQt5.QtWidgets import QApplication, QWidget, QVBoxLayout, QLabel, QLineEdit, QPushButton, QTextEdit, QFileDialog, QCheckBox, QGroupBox, QHBoxLayout, QSpacerItem, QSizePolicy
 from PyQt5.QtCore import Qt
-from data_processor import DataCut, parse_opt
+from data_processor import DataCut
 import argparse
 
 class LogProcessorApp(QWidget):
@@ -10,10 +10,17 @@ class LogProcessorApp(QWidget):
         super().__init__()
         self.initUI()
 
+    def center(self):
+        from PyQt5.QtWidgets import QDesktopWidget
+        qr = self.frameGeometry()
+        cp = QDesktopWidget().availableGeometry().center()
+        qr.moveCenter(cp)
+        self.move(qr.topLeft())
+        
     def initUI(self):
         self.setWindowTitle('UFP 日志裁剪工具')
-        self.setGeometry(700, 300, 600, 400)
-
+        self.setGeometry(100, 100, 600, 400)
+        self.center()
         # 使用样式表改善视觉效果
         self.setStyleSheet("""
             QWidget {
