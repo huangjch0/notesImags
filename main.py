@@ -10,9 +10,17 @@ class LogProcessorApp(QWidget):
         super().__init__()
         self.initUI()
 
+    def center(self):
+        from PyQt5.QtWidgets import QDesktopWidget
+        qr = self.frameGeometry()
+        cp = QDesktopWidget().availableGeometry().center()
+        qr.moveCenter(cp)
+        self.move(qr.topLeft())
+
     def initUI(self):
         self.setWindowTitle('UFP 日志裁剪工具')
         self.setGeometry(700, 300, 600, 400)
+        self.center()
 
         # 使用样式表改善视觉效果
         self.setStyleSheet("""
@@ -108,7 +116,6 @@ class LogProcessorApp(QWidget):
 
 
     def toggle_collapsible_box(self):
-        # 如果可折叠区域是可见的，则隐藏它，反之亦然
         self.collapsible_box.setHidden(not self.collapsible_box.isHidden())
 
     # def browse_files(self):
